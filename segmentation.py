@@ -30,7 +30,6 @@ uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
 
 # Placeholder for Pareto Analysis activation
-st.write("## What pages bring the most Traffic?")
 st.write("Click the button below to run a Pareto Analysis and export the result.")
 pareto_button = st.button("Pareto Analysis")
 
@@ -81,7 +80,7 @@ try:
             # Save the result to an Excel file
             st.write("### Pareto Result")
             st.dataframe(result.head())
-
+            
             # Export as CSV
             if st.button("Export Pareto Result as CSV"):
                 csv = result.to_csv('Pareto_Result.csv', index=False)
