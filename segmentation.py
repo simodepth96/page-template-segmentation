@@ -15,6 +15,7 @@ def clean_and_segment_data(df):
     df_cleaned['Sub category'] = df_cleaned['Page'].str.split('/').str[5]
     df_cleaned['Main category'] = df_cleaned['Main category'].fillna('Homepage')
     df2 = df_cleaned.dropna()
+    df2.to_csv('cleaned_segmentation.csv',index=False)
 
     return df2
 
@@ -27,9 +28,6 @@ uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx
 
 # Dropdown for selecting category level
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
-
-# Apply Segmentation button
-apply_segmentation = st.button("Apply Segmentation")
 
 # Placeholder for Pareto Analysis activation
 st.write("## What pages bring the most Traffic?")
