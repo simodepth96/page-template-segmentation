@@ -26,7 +26,7 @@ st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 st.write("## Apply Segmentation")
-pareto_button = st.button("Apply Segmentation")
+apply_segmentation = st.button("Apply Segmentation")
 
 # Placeholder for Pareto Analysis activation
 st.write("## What pages bring the most Traffic?")
