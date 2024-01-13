@@ -29,12 +29,9 @@ uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx
 # Dropdown for selecting category level
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
 
-# Apply Segmentation button
-apply_segmentation = st.button("Apply Segmentation")
-
 # Placeholder for Pareto Analysis activation
 st.write("## What pages bring the most Traffic?")
-st.write("Click the button above to activate Pareto Analysis and export the result.")
+st.write("Click the button below to run a Pareto Analysis and export the result.")
 pareto_button = st.button("Pareto Analysis")
 
 try:
