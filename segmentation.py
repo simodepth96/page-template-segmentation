@@ -27,7 +27,7 @@ st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 # Dropdown for selecting category level
-category_level = st.selectbox("Choose Category Level", ["Country", "Main Category", "Sub Category"])
+category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
 
 # Apply Segmentation button
 apply_segmentation = st.button("Apply Segmentation")
