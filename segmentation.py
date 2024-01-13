@@ -24,7 +24,7 @@ st.title("Clicks Data Analysis")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 # Choose segmentation level
-segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main Category", "Sub Category"])
+segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main category", "Sub category"])
 
 try:
     if uploaded_file is not None:
