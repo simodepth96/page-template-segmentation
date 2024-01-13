@@ -25,7 +25,10 @@ st.title("Page Template Segmentation and Data Analysis")
 st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
-st.write("## Apply Segmentation")
+# Dropdown for selecting category level
+category_level = st.selectbox("Choose Category Level", ["Country", "Main Category", "Sub Category"])
+
+# Apply Segmentation button
 apply_segmentation = st.button("Apply Segmentation")
 
 # Placeholder for Pareto Analysis activation
@@ -48,18 +51,17 @@ try:
         st.write("### Data Visualization")
 
         # Segmentation based on user choice
-        segmented_df = df2.groupby(segmentation_level)['Clicks'].count().reset_index()
+        segmented_df = df2.groupby(category_level)['Clicks'].count().reset_index()
         segmented_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
         segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
 
         # Display segmented data
-        st.write(f"#### {segmentation_level} by Clicks")
+        st.write(f"#### {category_level} by Clicks")
         st.dataframe(segmented_df.head())
 
         # Bar chart
-        st.write(f"#### Bar Chart - {segmentation_level} by Clicks")
-        st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
-
+        st.write(f"#### Bar Chart - {category_level} by Clicks")
+        st.plotly_chart(px.bar(segmented_df.head(10), x=category_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
 
         if pareto_button:
             # Apply Pareto
@@ -80,4 +82,4 @@ try:
                 st.success("Pareto result exported as Performance_df.xlsx")
 
 except KeyError as e:
-    st.error(f"Error: {e}. Please choose a valid segmentation level.")
+    st.error(f"Error: {e}. Please choose a valid category level.")
