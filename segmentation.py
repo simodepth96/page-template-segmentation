@@ -25,8 +25,13 @@ st.title("Page Template Segmentation and Data Analysis")
 st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
-# Apply Segmentation button
-apply_segmentation = st.button("Apply Segmentation")
+# Dropdown for selecting category level
+category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
+
+# Placeholder for Pareto Analysis activation
+st.write("## What pages bring the most Traffic?")
+st.write("Click the button above to activate Pareto Analysis and export the result.")
+pareto_button = st.button("Pareto Analysis")
 
 try:
     if uploaded_file is not None:
@@ -38,9 +43,6 @@ try:
         # Display the cleaned and segmented dataset
         st.write("### Cleaned and Segmented Data")
         st.dataframe(df2.head())
-        
-# Dropdown for selecting category level
-category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
 
         # Data Viz
         st.write("### Data Visualization")
@@ -57,11 +59,6 @@ category_level = st.selectbox("Choose Category Level", ["Country", "Main categor
         # Bar chart
         st.write(f"#### Bar Chart - {category_level} by Clicks")
         st.plotly_chart(px.bar(segmented_df.head(10), x=category_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
-
-# Placeholder for Pareto Analysis activation
-st.write("## What pages bring the most Traffic?")
-st.write("Click the button above to activate Pareto Analysis and export the result.")
-pareto_button = st.button("Pareto Analysis")
 
         if pareto_button:
             # Apply Pareto
