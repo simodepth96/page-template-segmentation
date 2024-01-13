@@ -53,7 +53,7 @@ try:
         st.dataframe(segmented_df.head())
 
         # Bar chart
-        st.write(f"#### Bar Chart - {segmentation_level} Segmentation")
+        st.write(f"#### Bar Chart - {segmentation_level}")
         st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
 
         # Data Analysis - Apply Pareto
