@@ -50,11 +50,11 @@ try:
         segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
 
         # Display segmented data
-        st.write(f"#### {segmentation_level}")
+        st.write(f"#### {segmentation_level} by Clicks")
         st.dataframe(segmented_df.head())
 
         # Bar chart
-        st.write(f"#### Bar Chart - {segmentation_level}")
+        st.write(f"#### Bar Chart - {segmentation_level} by Clicks")
         st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
 
 
