@@ -41,19 +41,19 @@ if uploaded_file is not None:
     st.write("### Data Visualization")
 
     # First level: Country
-    country = df.groupby('Country')['Clicks'].count().reset_index()
+    country = df2.groupby('Country')['Clicks'].count().reset_index()
     country.rename(columns={'Clicks': 'Clicks'}, inplace=True)
     country = country.sort_values(by='Clicks', ascending=False)
     st.plotly_chart(px.histogram(country.head(10), x='Country', y='Clicks'))
 
     # Second level: Main Category
-    main_category = df.groupby('Main category')['Clicks'].count().reset_index()
+    main_category = df2.groupby('Main category')['Clicks'].count().reset_index()
     main_category.rename(columns={'Clicks': 'Clicks'}, inplace=True)
     main_category = main_category.sort_values(by='Clicks', ascending=False)
     st.plotly_chart(px.histogram(main_category.head(10), x='Main category', y='Clicks'))
 
     # Third level: Sub Category
-    sub_df = df.groupby('Sub category')['Clicks'].count().reset_index()
+    sub_df = df2.groupby('Sub category')['Clicks'].count().reset_index()
     sub_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
     sub_df = sub_df.sort_values(by='Clicks', ascending=False)
     st.plotly_chart(px.histogram(sub_df.head(10), x='Sub category', y='Clicks'))
