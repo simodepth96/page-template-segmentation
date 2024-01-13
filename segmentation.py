@@ -20,14 +20,14 @@ def clean_and_segment_data(df):
 # Streamlit App
 st.title("Clicks Data Analysis")
 
-# Choose segmentation level
-segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main Category", "Sub Category"])
-
 # Upload dataset
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
+# Choose segmentation level
+segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main category", "Sub category"])
+
 # Placeholder for Pareto Analysis activation
-pareto_button = st.button("Activate Pareto Analysis")
+pareto_button = st.button("Pareto Analysis")
 
 try:
     if uploaded_file is not None:
@@ -76,5 +76,10 @@ try:
             if st.button("Export as XLSX"):
                 result.to_excel('Performance_df.xlsx', index=False)
                 st.success("Pareto result exported as Performance_df.xlsx")
+
+        # Pareto Analysis - What pages bring the most Traffic?
+        st.write("## Pareto Analysis - What pages bring the most Traffic?")
+        st.write("Click the button above to activate Pareto Analysis and export the result.")
+
 except KeyError as e:
     st.error(f"Error: {e}. Please choose a valid segmentation level.")
