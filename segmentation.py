@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import base64
+from io import BytesIO
 
 # Function to apply data cleaning and segmentation
 def clean_and_segment_data(df):
@@ -45,10 +46,11 @@ try:
         st.write("### Cleaned and Segmented Data")
 
         # Export link for Cleaned and Segmented Data
-        csv = df2.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
-        href_cleaned_data = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Export Cleaned and Segmented Data as CSV</a>'
-        st.markdown(href_cleaned_data, unsafe_allow_html=True)
+        if st.button("Export Cleaned and Segmented Data as CSV"):
+            csv = df2.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
+            href_cleaned_data = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Export Cleaned and Segmented Data as CSV</a>'
+            st.markdown(href_cleaned_data, unsafe_allow_html=True)
 
         st.dataframe(df2.head())
 
@@ -81,12 +83,13 @@ try:
             st.write("### Pareto Result")
 
             # Export link for Pareto Result
-            excel = result.to_excel(index=False)
-            b64_excel = base64.b64encode(excel).decode()
+            excel_buffer = BytesIO()
+            result.to_excel(excel_buffer, index=False)
+            excel_buffer.seek(0)
+            b64_excel = base64.b64encode(excel_buffer.read()).decode()
             href_pareto_result = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64_excel}" download="Performance_df.xlsx">Export Pareto Result as XLSX</a>'
             st.markdown(href_pareto_result, unsafe_allow_html=True)
 
             st.dataframe(result.head())
 
-except KeyError as e:
-    st.error(f"Error: {e}. Please choose a valid category level.")
+except KeyError as e
