@@ -19,18 +19,19 @@ def clean_and_segment_data(df):
     return df2
 
 # Streamlit App
-st.title("Clicks Data Analysis")
+st.title("Page Template Segmentation and Data Analysis")
 
 # Upload dataset
+st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
-# Choose segmentation level
-segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main category", "Sub category"])
+st.write("## Apply Segmentation")
+pareto_button = st.button("Apply Segmentation")
 
 # Placeholder for Pareto Analysis activation
-pareto_button = st.button("Pareto Analysis")
 st.write("## What pages bring the most Traffic?")
 st.write("Click the button above to activate Pareto Analysis and export the result.")
+pareto_button = st.button("Pareto Analysis")
 
 try:
     if uploaded_file is not None:
