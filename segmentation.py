@@ -26,28 +26,31 @@ uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx
 # Choose segmentation level
 segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main Category", "Sub Category"])
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
+try:
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
 
-    # Apply data cleaning and segmentation
-    df2 = clean_and_segment_data(df)
+        # Apply data cleaning and segmentation
+        df2 = clean_and_segment_data(df)
 
-    # Display the cleaned and segmented dataset
-    st.write("### Cleaned and Segmented Data")
-    st.dataframe(df2.head())
+        # Display the cleaned and segmented dataset
+        st.write("### Cleaned and Segmented Data")
+        st.dataframe(df2.head())
 
-    # Data Viz
-    st.write("### Data Visualization")
+        # Data Viz
+        st.write("### Data Visualization")
 
-    # Segmentation based on user choice
-    segmented_df = df2.groupby(segmentation_level)['Clicks'].count().reset_index()
-    segmented_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
-    segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
+        # Segmentation based on user choice
+        segmented_df = df2.groupby(segmentation_level)['Clicks'].count().reset_index()
+        segmented_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
+        segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
 
-    # Display segmented data
-    st.write(f"#### {segmentation_level} Segmentation")
-    st.dataframe(segmented_df.head())
+        # Display segmented data
+        st.write(f"#### {segmentation_level} Segmentation")
+        st.dataframe(segmented_df.head())
 
-    # Bar chart
-    st.write(f"#### Bar Chart - {segmentation_level} Segmentation")
-    st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
+        # Bar chart
+        st.write(f"#### Bar Chart - {segmentation_level} Segmentation")
+        st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
+except KeyError as e:
+    st.error(f"Error: {e}. Please choose a valid segmentation level.")
