@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import base64
 
 # Function to apply data cleaning and segmentation
 def clean_and_segment_data(df):
@@ -15,7 +16,6 @@ def clean_and_segment_data(df):
     df_cleaned['Sub category'] = df_cleaned['Page'].str.split('/').str[5]
     df_cleaned['Main category'] = df_cleaned['Main category'].fillna('Homepage')
     df2 = df_cleaned.dropna()
-    df2.to_csv('cleaned_segmentation.csv',index=False)
 
     return df2
 
@@ -27,7 +27,10 @@ st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 # Dropdown for selecting category level
-category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
+category_level = st.selectbox("Choose Category Level", ["Country", "Main Category", "Sub Category"])
+
+# Apply Segmentation button
+apply_segmentation = st.button("Apply Segmentation")
 
 # Placeholder for Pareto Analysis activation
 st.write("## What pages bring the most Traffic?")
@@ -46,8 +49,10 @@ try:
 
         # Export button for Cleaned and Segmented Data
         if st.button("Export Cleaned and Segmented Data as CSV"):
-            df2.to_csv('Cleaned_Segmented_Data.csv', index=False)
-            st.success("Cleaned and Segmented Data exported as Cleaned_Segmented_Data.csv")
+            csv = df2.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
+            href = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Download CSV</a>'
+            st.markdown(href, unsafe_allow_html=True)
 
         st.dataframe(df2.head())
 
