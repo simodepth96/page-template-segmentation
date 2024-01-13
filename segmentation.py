@@ -82,10 +82,13 @@ try:
             st.write("### Pareto Result")
             st.dataframe(result.head())
 
-            # Export as XLSX
-            if st.button("Export Pareto Result as XLSX"):
-                result.to_excel('Performance_df.xlsx', index=False)
-                st.success("Pareto result exported as Performance_df.xlsx")
+        # Export button for Cleaned and Segmented Data
+        if st.button("Export Pareto Result as CSV"):
+            excel = result.to_csv('Performance_df.csv', index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
+            href = f'<a href="data:file/csv;base64,{b64}" download="Pareto_Result.csv">Download CSV</a>'
+            st.markdown(href, unsafe_allow_html=True)
+
 
 except KeyError as e:
     st.error(f"Error: {e}. Please choose a valid category level.")
