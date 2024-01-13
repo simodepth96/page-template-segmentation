@@ -24,7 +24,7 @@ st.title("Clicks Data Analysis")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 # Choose segmentation level
-segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main category", "Sub category"])
+segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main Category", "Sub Category"])
 
 try:
     if uploaded_file is not None:
@@ -52,5 +52,25 @@ try:
         # Bar chart
         st.write(f"#### Bar Chart - {segmentation_level} Segmentation")
         st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
+
+        # Data Analysis - Apply Pareto
+        st.write("## Data Analysis - Apply Pareto")
+
+        # Apply Pareto
+        num_column = 'Clicks'
+        df2['cum_sum'] = df2[num_column].cumsum(skipna=True)
+        df2['cum_perc'] = 100 * df2['cum_sum'] / df2[num_column].sum()
+        df2['cum_perc'] = df2['cum_perc'].astype(int)
+        result = df2[df2['cum_perc'] <= 80][['Page', 'Clicks', 'Impressions', 'Country', 'Main category', 'Sub category', 'cum_perc']]
+        result['cum_perc'] = result['cum_perc'].astype(str) + '%'
+
+        # Save the result to an Excel file
+        st.write("### Pareto Result")
+        st.dataframe(result.head())
+
+        # Export as XLSX
+        if st.button("Export as XLSX"):
+            result.to_excel('Performance_df.xlsx', index=False)
+            st.success("Pareto result exported as Performance_df.xlsx")
 except KeyError as e:
     st.error(f"Error: {e}. Please choose a valid segmentation level.")
