@@ -24,7 +24,7 @@ st.title("Clicks Data Analysis")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
 
 # Choose segmentation level
-segmentation_level = st.radio("Choose Segmentation Level", ["First Level", "Second Level", "Third Level"])
+segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main Category", "Sub Category"])
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
@@ -39,23 +39,15 @@ if uploaded_file is not None:
     # Data Viz
     st.write("### Data Visualization")
 
-    # First level: Country
-    if segmentation_level == "First Level":
-        country = df2.groupby('Country')['Clicks'].count().reset_index()
-        country.rename(columns={'Clicks': 'Clicks'}, inplace=True)
-        country = country.sort_values(by='Clicks', ascending=False)
-        st.plotly_chart(px.histogram(country.head(10), x='Country', y='Clicks'))
+    # Segmentation based on user choice
+    segmented_df = df2.groupby(segmentation_level)['Clicks'].count().reset_index()
+    segmented_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
+    segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
 
-    # Second level: Main Category
-    elif segmentation_level == "Second Level":
-        main_category = df2.groupby('Main category')['Clicks'].count().reset_index()
-        main_category.rename(columns={'Clicks': 'Clicks'}, inplace=True)
-        main_category = main_category.sort_values(by='Clicks', ascending=False)
-        st.plotly_chart(px.histogram(main_category.head(10), x='Main category', y='Clicks'))
+    # Display segmented data
+    st.write(f"#### {segmentation_level} Segmentation")
+    st.dataframe(segmented_df.head())
 
-    # Third level: Sub Category
-    elif segmentation_level == "Third Level":
-        sub_df = df2.groupby('Sub category')['Clicks'].count().reset_index()
-        sub_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
-        sub_df = sub_df.sort_values(by='Clicks', ascending=False)
-        st.plotly_chart(px.histogram(sub_df.head(10), x='Sub category', y='Clicks'))
+    # Bar chart
+    st.write(f"#### Bar Chart - {segmentation_level} Segmentation")
+    st.plotly_chart(px.bar(segmented_df.head(10), x=segmentation_level, y='Clicks', labels={'Clicks': 'Clicks Count'}))
