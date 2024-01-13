@@ -28,6 +28,9 @@ uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx
 # Dropdown for selecting category level
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
 
+# Apply Segmentation button
+apply_segmentation = st.button("Apply Segmentation")
+
 # Placeholder for Pareto Analysis activation
 st.write("## What pages bring the most Traffic?")
 st.write("Click the button above to activate Pareto Analysis and export the result.")
@@ -42,6 +45,12 @@ try:
 
         # Display the cleaned and segmented dataset
         st.write("### Cleaned and Segmented Data")
+
+        # Export button for Cleaned and Segmented Data
+        if st.button("Export Cleaned and Segmented Data as CSV"):
+            df2.to_csv('Cleaned_Segmented_Data.csv', index=False)
+            st.success("Cleaned and Segmented Data exported as Cleaned_Segmented_Data.csv")
+
         st.dataframe(df2.head())
 
         # Data Viz
@@ -74,7 +83,7 @@ try:
             st.dataframe(result.head())
 
             # Export as XLSX
-            if st.button("Export as XLSX"):
+            if st.button("Export Pareto Result as XLSX"):
                 result.to_excel('Performance_df.xlsx', index=False)
                 st.success("Pareto result exported as Performance_df.xlsx")
 
