@@ -29,6 +29,8 @@ segmentation_level = st.selectbox("Choose Segmentation Level", ["Country", "Main
 
 # Placeholder for Pareto Analysis activation
 pareto_button = st.button("Pareto Analysis")
+st.write("## What pages bring the most Traffic?")
+st.write("Click the button above to activate Pareto Analysis and export the result.")
 
 try:
     if uploaded_file is not None:
@@ -75,10 +77,6 @@ try:
             if st.button("Export as XLSX"):
                 result.to_excel('Performance_df.xlsx', index=False)
                 st.success("Pareto result exported as Performance_df.xlsx")
-
-        # Pareto Analysis - What pages bring the most Traffic?
-        st.write("## Pareto Analysis - What pages bring the most Traffic?")
-        st.write("Click the button above to activate Pareto Analysis and export the result.")
 
 except KeyError as e:
     st.error(f"Error: {e}. Please choose a valid segmentation level.")
