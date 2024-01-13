@@ -44,12 +44,11 @@ try:
         # Display the cleaned and segmented dataset
         st.write("### Cleaned and Segmented Data")
 
-        # Export button for Cleaned and Segmented Data
-        if st.button("Export Cleaned and Segmented Data as CSV"):
-            csv = df2.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
-            href = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Download CSV</a>'
-            st.markdown(href, unsafe_allow_html=True)
+        # Export link for Cleaned and Segmented Data
+        csv = df2.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
+        href_cleaned_data = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Export Cleaned and Segmented Data as CSV</a>'
+        st.markdown(href_cleaned_data, unsafe_allow_html=True)
 
         st.dataframe(df2.head())
 
@@ -80,12 +79,14 @@ try:
 
             # Save the result to an Excel file
             st.write("### Pareto Result")
-            st.dataframe(result.head())
 
-            # Export as XLSX
-            if st.button("Export Pareto Result as XLSX"):
-                result.to_excel('Performance_df.xlsx', index=False)
-                st.success("Pareto result exported as Performance_df.xlsx")
+            # Export link for Pareto Result
+            excel = result.to_excel(index=False)
+            b64_excel = base64.b64encode(excel).decode()
+            href_pareto_result = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64_excel}" download="Performance_df.xlsx">Export Pareto Result as XLSX</a>'
+            st.markdown(href_pareto_result, unsafe_allow_html=True)
+
+            st.dataframe(result.head())
 
 except KeyError as e:
     st.error(f"Error: {e}. Please choose a valid category level.")
