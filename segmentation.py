@@ -14,8 +14,9 @@ def clean_and_segment_data(df):
     df_cleaned['Main category'] = df_cleaned['Page'].str.split('/').str[4]
     df_cleaned['Sub category'] = df_cleaned['Page'].str.split('/').str[5]
     df_cleaned['Main category'] = df_cleaned['Main category'].fillna('Homepage')
+    df2 = df_cleaned.dropna()
 
-    return df_cleaned
+    return df2
 
 # Streamlit App
 st.title("Clicks Data Analysis")
