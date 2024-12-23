@@ -26,11 +26,6 @@ st.markdown(
     "This app allows you to grasp top-traffic driving areas of a website."
     "In this space, you'll have all your site URLs broken down into page templates and grouped by Clicks."
     )
-
-# File Upload
-st.markdown("---")
-uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["xlsx"]
-
 st.sidebar.subheader(
     "🎯 Use Cases"
 )
@@ -81,6 +76,10 @@ try:
 
         # Data Viz
         st.write("### Data Visualization")
+        
+# File Upload
+st.markdown("---")
+uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["xlsx"]
 
         # Segmentation based on user choice
         segmented_df = df2.groupby(category_level)['Clicks'].count().reset_index()
