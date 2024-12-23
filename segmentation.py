@@ -29,9 +29,9 @@ st.markdown(
 
 # File Upload
 st.markdown("---")
-uploaded_file = st.file_uploader("\ud83d\udcc4 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["csv", "xlsx"])
+uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["csv", "xlsx"])
 
-st.sidebar.subheader("\ud83d\udd0f Use Cases")
+st.sidebar.subheader("🎯 Use Cases")
 st.sidebar.markdown(
     """
     - Preliminary sampling of traffic-driving page templates for a Core Web Vitals analysis
@@ -39,7 +39,7 @@ st.sidebar.markdown(
     """
 )
 
-st.sidebar.subheader("\ud83d\udcaa Strengths")
+st.sidebar.subheader("💪 Strengths")
 st.sidebar.markdown(
     """
     - Identify the top-traffic driving page templates of a website
@@ -69,7 +69,6 @@ try:
         if st.button("Export Cleaned and Segmented Data as Excel"):
             with pd.ExcelWriter('Cleaned_Segmented_Data.xlsx', engine='xlsxwriter') as writer:
                 df2.to_excel(writer, sheet_name='Sheet1', index=False)
-                writer.save()
             b64 = base64.b64encode(open('Cleaned_Segmented_Data.xlsx', 'rb').read()).decode()
             href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Cleaned_Segmented_Data.xlsx">Download Excel</a>'
             st.markdown(href, unsafe_allow_html=True)
@@ -105,7 +104,6 @@ try:
             if st.button("Export Pareto Result as Excel"):
                 with pd.ExcelWriter('Pareto_Result.xlsx', engine='xlsxwriter') as writer:
                     result.to_excel(writer, sheet_name='Sheet1', index=False)
-                    writer.save()
                 b64 = base64.b64encode(open('Pareto_Result.xlsx', 'rb').read()).decode()
                 href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Pareto_Result.xlsx">Download Excel</a>'
                 st.markdown(href, unsafe_allow_html=True)
