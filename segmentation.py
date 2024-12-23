@@ -101,10 +101,10 @@ try:
 
             # Export as Excel
             if st.button("Export Pareto Result as Excel"):
-                result.to_excel('Pareto_Result.xlsx', index=False)
-                b64 = base64.b64encode(open('Pareto_Result.xlsx', 'rb').read()).decode()
-                href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Pareto_Result.xlsx">Download Excel</a>'
-                st.markdown(href, unsafe_allow_html=True)
-
-except KeyError as e:
-    st.error(f"Error: {e}. Please choose a valid category level.")
+                output = io.BytesIO()
+                with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                    df2.to_excel(writer, sheet_name='Sheet1', index=False)
+                    excel_data = output.getvalue()
+                    b64 = base64.b64encode(excel_data).decode()
+                    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Cleaned_Segmented_Data.xlsx">Download Excel File</a>'
+                    st.markdown(href, unsafe_allow_html=True)
