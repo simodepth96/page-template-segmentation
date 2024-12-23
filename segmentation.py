@@ -22,6 +22,15 @@ def clean_and_segment_data(df):
 # Streamlit App
 st.title("Page Template Segmentation and Data Analysis")
 
+st.markdown(
+    "This app allows you to grasp top-traffic driving areas of a website."
+    "In this space, you'll have all your site URLs broken down into page templates and grouped by Clicks."
+    )
+
+# File Upload
+st.markdown("---")
+uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["xlsx"]
+
 st.sidebar.subheader(
         "🎯 Use Cases"
     )
@@ -42,10 +51,7 @@ st.sidebar.markdown(
         - Works with large datasets, returns bar chart and lets you export the segmented output
         """
     )
-    
-# Upload dataset
-st.write("## Upload your dataset")
-uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
+
 
 # Dropdown for selecting category level
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
