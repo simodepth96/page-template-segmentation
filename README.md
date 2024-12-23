@@ -10,11 +10,11 @@ This app allows you to have your site URLs broken down into page templates and g
 Example Input
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/simodepth96/page-template-segmentation/blob/main/Screenshot%202024-12-23%20175609.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/simodepth96/page-template-segmentation/blob/main/Screenshot%202024-12-23%20175609.png">
   <img
     alt=""
-    src="https://github.com/simodepth96/hreflang-xml-sitemap/blob/e00fe36c874ab990041e89c4eef423e529d89650/both%20input.png"
+    src="https://github.com/simodepth96/page-template-segmentation/blob/main/Screenshot%202024-12-23%20175609.png"
     style="max-width: 100%; height: auto;">
 </picture>
 
