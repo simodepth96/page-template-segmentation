@@ -25,28 +25,28 @@ st.title("Page Template Segmentation and Data Analysis")
 st.markdown(
     "This app allows you to grasp top-traffic driving areas of a website."
     "In this space, you'll have all your site URLs broken down into page templates and grouped by Clicks."
-    )
-st.sidebar.subheader(
-    "🎯 Use Cases"
-)
-st.sidebar.markdown(
-        """
-        - Preliminary sampling of traffic-driving page templates for a Core Web Vitals analysis
-        - Explorative analysis of popular page templates of a brand-new website prior technical SEO deep dives
-        """
 )
 
-st.sidebar.subheader(
-        "💪Strengths"
-    )
-st.sidebar.markdown(
-        """
-        - Identify the top-traffic driving page templates of a website
-        - Zoom in on 20% of page templates bringing in 80% of organic traffic
-        - Works with large datasets, returns bar chart and lets you export the segmented output
-        """
-    )
+# File Upload
+st.markdown("---")
+uploaded_file = st.file_uploader("\ud83d\udcc4 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["csv", "xlsx"])
 
+st.sidebar.subheader("\ud83d\udd0f Use Cases")
+st.sidebar.markdown(
+    """
+    - Preliminary sampling of traffic-driving page templates for a Core Web Vitals analysis
+    - Explorative analysis of popular page templates of a brand-new website prior technical SEO deep dives
+    """
+)
+
+st.sidebar.subheader("\ud83d\udcaa Strengths")
+st.sidebar.markdown(
+    """
+    - Identify the top-traffic driving page templates of a website
+    - Zoom in on 20% of page templates bringing in 80% of organic traffic
+    - Works with large datasets, returns bar chart and lets you export the segmented output
+    """
+)
 
 # Dropdown for selecting category level
 category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
@@ -66,29 +66,23 @@ try:
         st.write("### Cleaned and Segmented Data")
 
         # Export button for Cleaned and Segmented Data
-        if st.button("Export Cleaned and Segmented Data as CSV"):
-            csv = df2.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
-            href = f'<a href="data:file/csv;base64,{b64}" download="Cleaned_Segmented_Data.csv">Download CSV</a>'
+        if st.button("Export Cleaned and Segmented Data as Excel"):
+            with pd.ExcelWriter('Cleaned_Segmented_Data.xlsx', engine='xlsxwriter') as writer:
+                df2.to_excel(writer, sheet_name='Sheet1', index=False)
+                writer.save()
+            b64 = base64.b64encode(open('Cleaned_Segmented_Data.xlsx', 'rb').read()).decode()
+            href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Cleaned_Segmented_Data.xlsx">Download Excel</a>'
             st.markdown(href, unsafe_allow_html=True)
 
         st.dataframe(df2.head())
 
         # Data Viz
         st.write("### Data Visualization")
-        
-# File Upload
-st.markdown("---")
-uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["xlsx"]
 
         # Segmentation based on user choice
         segmented_df = df2.groupby(category_level)['Clicks'].count().reset_index()
         segmented_df.rename(columns={'Clicks': 'Clicks'}, inplace=True)
         segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
-
-        # Display segmented data
-        #st.write(f"#### {category_level} by Clicks")
-        #st.dataframe(segmented_df.head())
 
         # Bar chart
         st.write(f"#### Bar Chart - {category_level} by Clicks")
@@ -106,12 +100,14 @@ uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following
             # Save the result to an Excel file
             st.write("### Pareto Result")
             st.dataframe(result.head())
-            
-            # Export as CSV
-            if st.button("Export Pareto Result as CSV"):
-                csv = result.to_csv('Pareto_Result.csv', index=False)
-                b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding for data
-                href = f'<a href="data:file/csv;base64,{b64}" download="Pareto_Result.csv">Download CSV</a>'
+
+            # Export as Excel
+            if st.button("Export Pareto Result as Excel"):
+                with pd.ExcelWriter('Pareto_Result.xlsx', engine='xlsxwriter') as writer:
+                    result.to_excel(writer, sheet_name='Sheet1', index=False)
+                    writer.save()
+                b64 = base64.b64encode(open('Pareto_Result.xlsx', 'rb').read()).decode()
+                href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Pareto_Result.xlsx">Download Excel</a>'
                 st.markdown(href, unsafe_allow_html=True)
 
 except KeyError as e:
