@@ -32,14 +32,14 @@ st.markdown("---")
 uploaded_file = st.file_uploader("📤 Upload a CSV/XLSX file with the following headers: Page,Clicks, Impressions, CTR, Position", type=["xlsx"]
 
 st.sidebar.subheader(
-        "🎯 Use Cases"
-    )
+    "🎯 Use Cases"
+)
 st.sidebar.markdown(
         """
         - Preliminary sampling of traffic-driving page templates for a Core Web Vitals analysis
         - Explorative analysis of popular page templates of a brand-new website prior technical SEO deep dives
         """
-    )
+)
 
 st.sidebar.subheader(
         "💪Strengths"
