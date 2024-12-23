@@ -22,6 +22,27 @@ def clean_and_segment_data(df):
 # Streamlit App
 st.title("Page Template Segmentation and Data Analysis")
 
+st.sidebar.subheader(
+        "🎯 Use Cases"
+    )
+st.sidebar.markdown(
+        """
+        - Preliminary sampling of traffic-driving page templates for a Core Web Vitals analysis
+        - Explorative analysis of popular page templates of a brand-new website prior technical SEO deep dives
+        """
+    )
+
+ st.sidebar.subheader(
+        "💪Strengths"
+    )
+st.sidebar.markdown(
+        """
+        - Identify the top-traffic driving page templates of a website
+        - Zoom in on 20% of page templates bringing in 80% of organic traffic
+        - Works with large datasets, returns bar chart and lets you export the segmented output
+        """
+    )
+    
 # Upload dataset
 st.write("## Upload your dataset")
 uploaded_file = st.file_uploader("Upload file (CSV or XLSX)", type=["csv", "xlsx"])
@@ -61,8 +82,8 @@ try:
         segmented_df = segmented_df.sort_values(by='Clicks', ascending=False)
 
         # Display segmented data
-        st.write(f"#### {category_level} by Clicks")
-        st.dataframe(segmented_df.head())
+        #st.write(f"#### {category_level} by Clicks")
+        #st.dataframe(segmented_df.head())
 
         # Bar chart
         st.write(f"#### Bar Chart - {category_level} by Clicks")
