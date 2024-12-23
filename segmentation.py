@@ -49,10 +49,10 @@ st.sidebar.markdown(
 )
 
 # Dropdown for selecting category level
-category_level = st.selectbox("Choose Category Level", ["Country", "Main category", "Sub category"])
+category_level = st.selectbox("Choose a Segmentation Category Level", ["Country", "Main category", "Sub category"])
 
 # Placeholder for Pareto Analysis activation
-st.write("Click the button below to run a Pareto Analysis and export the result.")
+st.write("🔬 Click the button below to run a Pareto Analysis and export the result.")
 pareto_button = st.button("Pareto Analysis")
 
 try:
