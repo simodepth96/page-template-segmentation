@@ -32,7 +32,7 @@ st.sidebar.markdown(
         """
     )
 
- st.sidebar.subheader(
+st.sidebar.subheader(
         "💪Strengths"
     )
 st.sidebar.markdown(
